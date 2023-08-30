@@ -35,7 +35,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody @Valid UsuarioCadastroDTO dados) {
         service.cadastro(dados);
         var dto = new UsuarioResponseDTO(dados);
-        return ResponseEntity.ok(dto);
+         return ResponseEntity.ok(dto);
     }
 
 }
