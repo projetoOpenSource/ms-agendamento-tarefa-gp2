@@ -6,6 +6,7 @@ import br.com.agendamento.api.service.usuario.UsuarioService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class UsuarioController {
      * @return UsuarioResponseDTO
      */
     @PostMapping
+    @Transactional
     public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody @Valid UsuarioCadastroDTO dados) {
         service.cadastro(dados);
         var dto = new UsuarioResponseDTO(dados);
