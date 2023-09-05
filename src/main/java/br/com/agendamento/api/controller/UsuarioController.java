@@ -31,7 +31,6 @@ public class UsuarioController {
      * @return UsuarioResponseDTO
      */
     @PostMapping
-    @Transactional
     public ResponseEntity<UsuarioResponseDTO> cadastro(@RequestBody @Valid UsuarioCadastroDTO dados) {
         service.cadastro(dados);
         var dto = new UsuarioResponseDTO(dados);

@@ -1,4 +1,4 @@
-package br.com.agendamento.api.model;
+package br.com.agendamento.api.handle;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
