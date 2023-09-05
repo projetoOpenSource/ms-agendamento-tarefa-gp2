@@ -9,24 +9,25 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id_usuario")
+@EqualsAndHashCode(of = "idUsuario")
 @Table
 @Entity
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    @Column(name = "id_usuario")
+    private Long idUsuario;
     private String nome;
     private String email;
     private String senha;
-    private Long id_status;
-
+    @ManyToOne
+    @JoinColumn(name = "id_status")
+    private Status idStatus;
 
     public Usuario(UsuarioCadastroDTO dados) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();
-        this.id_status = dados.id_status();
     }
 
 
