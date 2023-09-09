@@ -37,7 +37,7 @@ public class UsuarioService {
                 throw new ValidacaoException("Senha não coincidem");
             }
 
-            if (reposiroty.findByEmail(dados.email()) != null) {
+            if (reposiroty.existsByEmail(dados.email())) {
                 throw new ValidacaoException("Email já cadastrado");
             }
 

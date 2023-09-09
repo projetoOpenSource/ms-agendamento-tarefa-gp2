@@ -29,9 +29,12 @@ spring:
     # username: sa
     #password:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    #url: ${DB_URL}
+   # username: ${DB_USERNAME}
+   # password: ${DB_PASSWORD}
+    url: jdbc:mysql://152.67.41.142:3306/tarefadb2
+    username: usertarefagp2
+    password: agendamentogp2
     hikari:
       connection-timeout: 30000 # maximum number of milliseconds that a client will wait for a connection
       idle-timeout: 600000      # maximum idle time for connection
