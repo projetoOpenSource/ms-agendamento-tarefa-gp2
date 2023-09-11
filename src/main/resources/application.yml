@@ -24,11 +24,14 @@ spring:
     pathmatch:
       matching-strategy: ant-path-matcher
   datasource:
+    #url: jdbc:h2:mem:testdb
+    #driver-class-name: org.h2.Driver
+    # username: sa
+    #password:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    #Configurando o pool de conexões
     hikari:
       connection-timeout: 30000 # maximum number of milliseconds that a client will wait for a connection
       idle-timeout: 600000      # maximum idle time for connection
@@ -36,6 +39,10 @@ spring:
       maximum-pool-size: 40
       minimum-idle: 8
       validation-timeout: 3000
+  h2:
+    console:
+      enabled: true
+
   jpa:
     hibernate:
       ddl-auto: none
