@@ -17,7 +17,11 @@ import java.time.LocalDateTime;
 
 import static br.com.agendamento.api.util.TokenGenerator.getEmail;
 
-
+/**
+ * Service email
+ *
+ * @author Edson Rafael
+ */
 @Service
 public class EmailService {
 
@@ -29,6 +33,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+
+    /**
+     * Metodo para envio com token
+     *
+     * @author Edson Rafael
+     */
     @Transactional
     public void sendEmail(Email emailModel) throws InternalErrorException {
         emailModel.setDataExpiracao(LocalDateTime.now().plusHours(24));
@@ -46,6 +56,11 @@ public class EmailService {
         emailRepository.save(emailModel);
     }
 
+    /**
+     * Metodo para validação e confirmação do token
+     *
+     * @author Edson Rafael
+     */
     @Transactional
     public void confirmaEmail(String codigo, Usuario usuario) {
         Email emailModel = emailRepository.findByCodigoConfirmacao(codigo);
@@ -62,6 +77,11 @@ public class EmailService {
 
     }
 
+    /**
+     * Metodo para envio email com agradecimento ao usuario
+     *
+     * @author Edson Rafael
+     */
     @Transactional
     public void sendEmailConfirm(String email) throws InternalErrorException {
         try {

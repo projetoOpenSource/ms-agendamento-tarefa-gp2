@@ -47,7 +47,6 @@ public class UsuarioService {
 
             var usuario = new Usuario(null, dados.nome(), dados.email().toLowerCase(), dados.senha(), new Status(1L));
             reposiroty.save(usuario);
-
             var email = getEmail(dados.email(), usuario.getIdUsuario());
             emailService.sendEmail(email);
 

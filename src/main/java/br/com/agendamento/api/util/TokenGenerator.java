@@ -1,10 +1,14 @@
 package br.com.agendamento.api.util;
 
 import br.com.agendamento.api.model.Email;
-import br.com.agendamento.api.model.Usuario;
 
 import java.util.Random;
 
+/**
+ * Metodos para gerar e enviar
+ *
+ * @author Edson Rafael
+ */
 public class TokenGenerator {
     public static Email getEmail(String email, Long usuarioId) {
         String token = gerarCodigo();
