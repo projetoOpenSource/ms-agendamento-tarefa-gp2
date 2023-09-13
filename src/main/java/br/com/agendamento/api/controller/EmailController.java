@@ -3,8 +3,7 @@ package br.com.agendamento.api.controller;
 
 import br.com.agendamento.api.model.Email;
 import br.com.agendamento.api.model.Usuario;
-import br.com.agendamento.api.service.usuario.EmailService;
-import br.com.agendamento.api.service.usuario.UsuarioService;
+import br.com.agendamento.api.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

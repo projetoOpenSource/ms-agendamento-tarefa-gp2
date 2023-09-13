@@ -1,4 +1,4 @@
-package br.com.agendamento.api.service.usuario;
+package br.com.agendamento.api.service.email;
 
 import br.com.agendamento.api.exception.InternalErrorException;
 import br.com.agendamento.api.model.Email;
@@ -7,6 +7,7 @@ import br.com.agendamento.api.model.Usuario;
 import br.com.agendamento.api.repository.EmailRepository;
 import br.com.agendamento.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,6 +34,8 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Value("${spring.mail.username}")
+    private String emailFrom;
 
     /**
      * Metodo para envio com token
@@ -44,7 +47,7 @@ public class EmailService {
         emailModel.setDataExpiracao(LocalDateTime.now().plusHours(24));
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(emailModel.getEmailFrom());
+            message.setFrom(emailFrom);
             message.setTo(emailModel.getEmailTo());
             message.setSubject(emailModel.getSubject());
             message.setText(emailModel.getCodigoConfirmacao());
@@ -86,7 +89,7 @@ public class EmailService {
     public void sendEmailConfirm(String email) throws InternalErrorException {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("batista756l@gmail.com");
+            message.setFrom(emailFrom);
             message.setTo(email);
             message.setSubject("Email Confirmado");
             message.setText("Obrigado por confirmar o email");

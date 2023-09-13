@@ -31,13 +31,10 @@ public class Email {
     @Transient
     private String msg;
     @Transient
-    private String emailFrom;
-    @Transient
     private String subject;
 
 
-    public Email(String emailFrom, String emailTo, String codigoConfirmacao,String msg ,String subject, Long idUsuarioToken) {
-        this.emailFrom = emailFrom;
+    public Email(String emailTo, String codigoConfirmacao,String msg ,String subject, Long idUsuarioToken) {
         this.emailTo = emailTo;
         this.codigoConfirmacao = codigoConfirmacao;
         this.subject = subject;
@@ -45,8 +42,5 @@ public class Email {
         this.msg = msg;
     }
 
-    public Email(String emailTo){
-        this.emailFrom = emailFrom;
-    }
 
 }

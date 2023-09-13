@@ -7,6 +7,7 @@ import br.com.agendamento.api.exception.ValidacaoException;
 import br.com.agendamento.api.model.Status;
 import br.com.agendamento.api.model.Usuario;
 import br.com.agendamento.api.repository.UsuarioRepository;
+import br.com.agendamento.api.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

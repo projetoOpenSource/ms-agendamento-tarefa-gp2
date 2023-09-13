@@ -16,7 +16,7 @@ public class TokenGenerator {
         String msg = "\nSeja bem-vindo(a)" +
                      "\nConfirme sua conta com esse codigo: " + token +
                      "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + token + "/" + usuarioId;
-        return new Email("batista756l@gmail.com", email, token, msg, "Bem-Vindo", usuarioId);
+        return new Email(email, token, msg, "Bem-Vindo", usuarioId);
     }
 
 
