@@ -30,5 +30,9 @@ public class Usuario {
         this.senha = dados.senha();
     }
 
+    public Usuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
 
 }
