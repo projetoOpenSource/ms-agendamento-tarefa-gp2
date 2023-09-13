@@ -10,5 +10,4 @@ import java.time.LocalDateTime;
 public interface EmailRepository extends JpaRepository<Email, Long> {
     Email findByCodigoConfirmacao(String cod);
 
-    Email findByDataExpiracao(LocalDateTime dataExpiracao);
 }

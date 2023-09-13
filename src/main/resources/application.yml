@@ -5,29 +5,28 @@ logging:
   level:
     root: INFO
     '[org.springframework.boot.context]': INFO
+
 management:
   endpoints:
     web:
       exposure:
         include:
           - "*"
-      #Caso você queira que todos os endpoints não venham habilitados por default, você pode adicionar a seguinte linha:
-      #enabled-by-default:
+      # Caso você queira que todos os endpoints não venham habilitados por default, você pode adicionar a seguinte linha:
+      # enabled-by-default:
+
 server:
   compression:
     enabled: true
   port: 8080
   servlet:
     context-path: /ms-agendamento-tarefa
+
 spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
   datasource:
-    #url: jdbc:h2:mem:testdb
-    #driver-class-name: org.h2.Driver
-    # username: sa
-    #password:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -39,9 +38,17 @@ spring:
       maximum-pool-size: 40
       minimum-idle: 8
       validation-timeout: 3000
-  h2:
-    console:
-      enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: batista756l@gmail.com
+    password: azslkzoextammpls
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   jpa:
     hibernate:
@@ -51,6 +58,7 @@ spring:
     properties:
       '[format_sql]': true
     open-in-view: false
+
 springfox:
   documentation:
     info:

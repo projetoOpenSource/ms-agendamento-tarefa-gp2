@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
+import static br.com.agendamento.api.util.TokenGenerator.getEmail;
+
 /**
  * Service usuario
  *
@@ -23,6 +25,8 @@ import java.util.Objects;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository reposiroty;
+    @Autowired
+    private EmailService emailService;
 
 
     /**
@@ -43,13 +47,14 @@ public class UsuarioService {
 
             var usuario = new Usuario(null, dados.nome(), dados.email().toLowerCase(), dados.senha(), new Status(1L));
             reposiroty.save(usuario);
-            enviarEmailBoasVindas(dados.email());
+
+            var email = getEmail(dados.email(), usuario.getIdUsuario());
+            emailService.sendEmail(email);
+
+
         } catch (DataAccessException ex) {
             throw new InternalErrorException(ex.getMessage());
         }
     }
 
-    private void enviarEmailBoasVindas(String emailDestinatario) {
-        //Implementação
-    }
 }

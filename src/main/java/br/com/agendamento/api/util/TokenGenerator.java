@@ -6,13 +6,13 @@ import br.com.agendamento.api.model.Usuario;
 import java.util.Random;
 
 public class TokenGenerator {
-    public static Email getEmail(String email, Usuario usuario) {
+    public static Email getEmail(String email, Long usuarioId) {
         String token = gerarCodigo();
 
         String msg = "\nSeja bem-vindo(a)" +
                      "\nConfirme sua conta com esse codigo: " + token +
-                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + token + "/" + usuario.getIdUsuario();
-        return new Email("batista756l@gmail.com", email, token, msg, "Bem-Vindo", usuario.getIdUsuario());
+                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + token + "/" + usuarioId;
+        return new Email("batista756l@gmail.com", email, token, msg, "Bem-Vindo", usuarioId);
     }
 
 

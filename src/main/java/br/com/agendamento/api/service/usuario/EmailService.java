@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Random;
 
 import static br.com.agendamento.api.util.TokenGenerator.getEmail;
 
@@ -54,7 +53,7 @@ public class EmailService {
 
         if (emailModel != null && emailModel.getDataExpiracao() != null) {
             if (emailModel.getDataExpiracao().isBefore(LocalDateTime.now())) {
-                var email = getEmail(user.getEmail(), usuario);
+                var email = getEmail(user.getEmail(), usuario.getIdUsuario());
                 sendEmail(email);
             }
             user.setIdStatus(new Status(2L));
@@ -76,7 +75,6 @@ public class EmailService {
             throw new InternalErrorException("Ocorreu um erro ao enviar o email");
         }
     }
-
 
 
 }
