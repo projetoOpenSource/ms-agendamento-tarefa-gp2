@@ -7,7 +7,7 @@ import br.com.agendamento.api.exception.ValidacaoException;
 import br.com.agendamento.api.model.Status;
 import br.com.agendamento.api.model.Usuario;
 import br.com.agendamento.api.repository.UsuarioRepository;
-import br.com.agendamento.api.service.email.EmailService;
+import br.com.agendamento.api.service.email.UsuarioTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import static br.com.agendamento.api.util.TokenGenerator.getEmail;
+import static br.com.agendamento.api.util.TokenGenerator.enviarEmailComCod;
 
 /**
  * Service usuario
@@ -27,7 +27,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository reposiroty;
     @Autowired
-    private EmailService emailService;
+    private UsuarioTokenService usuarioTokenService;
 
 
     /**
@@ -48,9 +48,10 @@ public class UsuarioService {
 
             var usuario = new Usuario(null, dados.nome(), dados.email().toLowerCase(), dados.senha(), new Status(1L));
             reposiroty.save(usuario);
-            var email = getEmail(dados.email(), usuario.getIdUsuario());
-            emailService.sendEmail(email);
 
+            // Se o código chegar até aqui, significa que o cadastro foi bem-sucedido
+            var email = enviarEmailComCod(dados.email(), usuario.getIdUsuario());
+            usuarioTokenService.sendEmail(email);
 
         } catch (DataAccessException ex) {
             throw new InternalErrorException(ex.getMessage());

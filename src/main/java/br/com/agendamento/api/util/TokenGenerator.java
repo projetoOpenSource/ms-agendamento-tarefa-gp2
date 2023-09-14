@@ -1,38 +1,34 @@
 package br.com.agendamento.api.util;
 
-import br.com.agendamento.api.model.Email;
+import br.com.agendamento.api.model.UsuarioToken;
+import org.springframework.stereotype.Component;
 
-import java.util.Random;
+import java.util.UUID;
+
 
 /**
- * Metodos para gerar e enviar
+ * Metodos para gerar token e enviar
  *
  * @author Edson Rafael
  */
+
+@Component
 public class TokenGenerator {
-    public static Email getEmail(String email, Long usuarioId) {
-        String token = gerarCodigo();
+
+
+    public static UsuarioToken enviarEmailComCod(String email, Long id) {
+        String token = generateUniqueToken();
 
         String msg = "\nSeja bem-vindo(a)" +
                      "\nConfirme sua conta com esse codigo: " + token +
-                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + token + "/" + usuarioId;
-        return new Email(email, token, msg, "Bem-Vindo", usuarioId);
+                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + email + "/" + token;
+        return new UsuarioToken(email, token, msg, "Bem-Vindo", id);
     }
 
 
-    public static String gerarCodigo() {
-        String caracteres = "0123456789";
-
-        Random random = new Random();
-
-        StringBuilder codigo = new StringBuilder();
-
-        for (int i = 0; i < 6; i++) {
-            int index = random.nextInt(caracteres.length());
-            codigo.append(caracteres.charAt(index));
-        }
-
-        return codigo.toString();
+    public static String generateUniqueToken() {
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
+
 
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario_token")
-public class Email {
+public class UsuarioToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,7 @@ public class Email {
 
     @Column(name = "id_usuario")
     private Long idUsuario;
+
     @Transient
     private String emailTo;
     @Transient
@@ -34,12 +35,12 @@ public class Email {
     private String subject;
 
 
-    public Email(String emailTo, String codigoConfirmacao,String msg ,String subject, Long idUsuarioToken) {
+    public UsuarioToken(String emailTo, String codigoConfirmacao, String msg , String subject, Long idUsuarioToken) {
         this.emailTo = emailTo;
         this.codigoConfirmacao = codigoConfirmacao;
         this.subject = subject;
-        this.idUsuario = idUsuarioToken;
         this.msg = msg;
+        this.idUsuario = idUsuarioToken;
     }
 
 
