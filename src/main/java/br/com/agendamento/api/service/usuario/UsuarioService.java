@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import static br.com.agendamento.api.util.TokenGenerator.enviarEmailComCod;
+import static br.com.agendamento.api.service.email.UsuarioTokenService.enviarEmailComCod;
 
 /**
  * Service usuario
@@ -49,7 +49,7 @@ public class UsuarioService {
             var usuario = new Usuario(null, dados.nome(), dados.email().toLowerCase(), dados.senha(), new Status(1L));
             reposiroty.save(usuario);
 
-            // Se o código chegar até aqui, significa que o cadastro foi bem-sucedido
+
             var email = enviarEmailComCod(dados.email(), usuario.getIdUsuario());
             usuarioTokenService.sendEmail(email);
 

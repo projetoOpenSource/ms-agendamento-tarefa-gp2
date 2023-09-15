@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static br.com.agendamento.api.util.TokenGenerator.enviarEmailComCod;
+import static br.com.agendamento.api.util.TokenGenerator.generateUniqueToken;
 
 /**
  * Service email
@@ -52,7 +52,7 @@ public class UsuarioTokenService {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(emailFrom);
             message.setTo(usuarioTokenModel.getEmailTo());
-            message.setSubject(usuarioTokenModel.getSubject());
+            message.setSubject("Bem-Vindo");
             message.setText(usuarioTokenModel.getCodigoConfirmacao());
             message.setText(usuarioTokenModel.getMsg());
             javaMailSender.send(message);
@@ -114,6 +114,21 @@ public class UsuarioTokenService {
         } catch (MailException e) {
             throw new InternalErrorException("Ocorreu um erro ao enviar o email");
         }
+    }
+
+
+    /**
+     * Metodo para envio email com token apos cadastro ou token expirado
+     *
+     * @author Edson Rafael
+     */
+    public static UsuarioToken enviarEmailComCod(String email, Long id) {
+        String token = generateUniqueToken();
+
+        String msg = "\nSeja bem-vindo(a)" +
+                     "\nConfirme sua conta com esse codigo: " + token +
+                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + email + "/" + token;
+        return new UsuarioToken(email, token, msg, id);
     }
 
 

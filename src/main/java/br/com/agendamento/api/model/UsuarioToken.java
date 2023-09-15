@@ -31,14 +31,12 @@ public class UsuarioToken {
     private String emailTo;
     @Transient
     private String msg;
-    @Transient
-    private String subject;
 
 
-    public UsuarioToken(String emailTo, String codigoConfirmacao, String msg , String subject, Long idUsuarioToken) {
+
+    public UsuarioToken(String emailTo, String codigoConfirmacao, String msg, Long idUsuarioToken) {
         this.emailTo = emailTo;
         this.codigoConfirmacao = codigoConfirmacao;
-        this.subject = subject;
         this.msg = msg;
         this.idUsuario = idUsuarioToken;
     }
