@@ -7,7 +7,7 @@ import br.com.agendamento.api.exception.ValidacaoException;
 import br.com.agendamento.api.model.Status;
 import br.com.agendamento.api.model.Usuario;
 import br.com.agendamento.api.repository.UsuarioRepository;
-import br.com.agendamento.api.service.email.UsuarioTokenService;
+import br.com.agendamento.api.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import static br.com.agendamento.api.service.email.UsuarioTokenService.enviarEmailComCod;
+import static br.com.agendamento.api.service.email.EmailService.envioEmailComTokenNoCorpo;
 
 /**
  * Service usuario
@@ -27,7 +27,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository reposiroty;
     @Autowired
-    private UsuarioTokenService usuarioTokenService;
+    private EmailService emailService;
 
 
     /**
@@ -50,8 +50,8 @@ public class UsuarioService {
             reposiroty.save(usuario);
 
 
-            var email = enviarEmailComCod(dados.email(), usuario.getIdUsuario());
-            usuarioTokenService.sendEmail(email);
+            var email = envioEmailComTokenNoCorpo(dados.email(), usuario.getIdUsuario());
+            emailService.enviaEmailComToken(email);
 
         } catch (DataAccessException ex) {
             throw new InternalErrorException(ex.getMessage());

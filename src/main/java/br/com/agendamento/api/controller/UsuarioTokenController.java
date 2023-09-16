@@ -2,7 +2,7 @@ package br.com.agendamento.api.controller;
 
 
 import br.com.agendamento.api.model.UsuarioToken;
-import br.com.agendamento.api.service.email.UsuarioTokenService;
+import br.com.agendamento.api.service.token.UsuarioTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +22,8 @@ public class UsuarioTokenController {
 
     @GetMapping("/{email}/{codigoConfirmacao}")
     public ResponseEntity<UsuarioToken> update(@PathVariable String email, @PathVariable String codigoConfirmacao) {
-        service.confirmaEmail(email, codigoConfirmacao);
+        service.confirmarEmailComToken(email, codigoConfirmacao);
         return ResponseEntity.noContent().build();
     }
-
 
 }
