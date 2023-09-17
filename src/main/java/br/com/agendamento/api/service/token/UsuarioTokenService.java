@@ -55,7 +55,6 @@ public class UsuarioTokenService {
             if (user.getIdStatus().getIdStatus() == 2) {
                 throw new ValidacaoException("Usuario ja confirmado");
             }
-
             if (emailToken.getDataExpiracao().isBefore(LocalDateTime.now())) {
                 var email1 = envioEmailComTokenNoCorpo(user.getEmail(), user.getIdUsuario());
                 emailService.enviaEmailComToken(email1);
