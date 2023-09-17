@@ -22,10 +22,15 @@ public class UsuarioTokenController {
     @Autowired
     private UsuarioTokenService service;
 
+    /**
+     * Endpoint que confirma o email do usuário.
+     *
+     * @return ok
+     */
     @GetMapping("/{email}/{token}")
     public ResponseEntity<UsuarioToken> update(@PathVariable String email, @PathVariable String token) {
         service.confirmarEmailComToken(email, token);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 }

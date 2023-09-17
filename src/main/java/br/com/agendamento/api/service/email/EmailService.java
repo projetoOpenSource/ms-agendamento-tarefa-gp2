@@ -49,6 +49,22 @@ public class EmailService {
         tokenRepository.save(usuarioTokenModel);
     }
 
+    @Transactional
+    public void enviaEmailComTokenParaRecuperacaoSenha(UsuarioToken usuarioTokenModel) throws InternalErrorException {
+        usuarioTokenModel.setDataExpiracao(LocalDateTime.now().plusMinutes(15));
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(emailFrom);
+            message.setTo(usuarioTokenModel.getEmailTo());
+            message.setSubject("Recuperar senha");
+            message.setText(usuarioTokenModel.getMsg());
+            javaMailSender.send(message);
+        } catch (MailException e) {
+            throw new InternalErrorException("Ocorreu um erro ao enviar o email");
+        }
+        tokenRepository.save(usuarioTokenModel);
+    }
+
     /**
      * Metodo para envio email com agradecimento ao usuario
      *
@@ -68,6 +84,7 @@ public class EmailService {
         }
     }
 
+
     /**
      * Metodo para envio email com token apos cadastro ou token expirado
      *
@@ -78,8 +95,24 @@ public class EmailService {
 
         String msg = "\nSeja bem-vindo(a)" +
                      "\nConfirme sua conta com esse codigo: " + token +
-                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/confirmacao-email/" + email + "/" + token;
+                     "\n Link : http://localhost:8080/ms-agendamento-tarefa/recuperacao-senha" + email + "/" + token;
         return new UsuarioToken(email, token, msg, id);
+    }
+
+
+    /**
+     * Metodo para envio email com token para recuperacao de senha
+     *
+     * @author Edson Rafael
+     */
+    public static UsuarioToken envioEmailComTokenParaRecuperacaoSenha(String email, Long id) {
+        String token = generateUniqueToken();
+
+        String msg = "\nSeja bem-vindo(a)" +
+                     "\nToken para recuperação da senha: " + token +
+                     "\nToken expira em 15 minutos";
+        return new UsuarioToken(email, token, msg, id);
+
     }
 
 }
