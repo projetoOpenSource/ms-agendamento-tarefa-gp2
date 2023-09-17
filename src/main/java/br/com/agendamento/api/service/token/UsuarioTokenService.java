@@ -7,7 +7,6 @@ import br.com.agendamento.api.model.Status;
 import br.com.agendamento.api.repository.UsuarioRepository;
 import br.com.agendamento.api.repository.UsuarioTokenRepository;
 import br.com.agendamento.api.service.email.EmailService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
@@ -24,7 +23,6 @@ import static br.com.agendamento.api.service.email.EmailService.envioEmailComTok
  *
  * @author Edson Rafael
  */
-@Slf4j
 @Service
 public class UsuarioTokenService {
 
@@ -42,28 +40,33 @@ public class UsuarioTokenService {
      * @author Edson Rafael
      */
     @Transactional
-    public void confirmarEmailComToken(String email, String condigoConfirmacao) {
+    public void confirmarEmailComToken(String email, String codigoConfirmacao) {
         try {
             var user = Optional.ofNullable(usuarioRepository.findByEmail(email))
                     .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario não encontrado"));
 
-            var emailToken = tokenRepository.findByCodigoConfirmacao(condigoConfirmacao);
+            var emailToken = tokenRepository.findByCodigoConfirmacao(codigoConfirmacao);
 
             if (!user.getIdUsuario().equals(emailToken.getIdUsuario())) {
                 throw new ValidacaoException("Email incorreto do cadastro");
             }
+
             if (user.getIdStatus().getIdStatus() == 2) {
                 throw new ValidacaoException("Usuario ja confirmado");
             }
+
             if (emailToken.getDataExpiracao().isBefore(LocalDateTime.now())) {
-                var email1 = envioEmailComTokenNoCorpo(user.getEmail(), user.getIdUsuario());
-                emailService.enviaEmailComToken(email1);
-            } else if (emailToken.getCodigoConfirmacao().equals(condigoConfirmacao)) {
+                var emailConteudo = envioEmailComTokenNoCorpo(user.getEmail(), user.getIdUsuario());
+                emailService.enviaEmailComToken(emailConteudo);
+                return;
+            }
+
+            if (emailToken.getCodigoConfirmacao().equals(codigoConfirmacao)) {
                 user.setIdStatus(new Status(2L));
                 emailService.enviarEmailComAgradecimento(user.getEmail());
             }
 
-        } catch (DataAccessException ex) {
+        }  catch (DataAccessException ex) {
             throw new InternalErrorException(ex.getMessage());
         } catch (MailException e) {
             throw new InternalErrorException("Erro ao enviar o e-mail");
@@ -71,6 +74,7 @@ public class UsuarioTokenService {
             throw new InternalErrorException("Ocorreu um error interno");
         }
     }
+
 
 
 }

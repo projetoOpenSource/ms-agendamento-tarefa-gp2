@@ -49,7 +49,6 @@ public class UsuarioService {
             var usuario = new Usuario(null, dados.nome(), dados.email().toLowerCase(), dados.senha(), new Status(1L));
             reposiroty.save(usuario);
 
-
             var email = envioEmailComTokenNoCorpo(dados.email(), usuario.getIdUsuario());
             emailService.enviaEmailComToken(email);
 
