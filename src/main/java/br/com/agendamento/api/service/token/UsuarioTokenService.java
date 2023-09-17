@@ -56,6 +56,7 @@ public class UsuarioTokenService {
             if (emailToken.getDataExpiracao().isBefore(LocalDateTime.now())) {
                 var email1 = envioEmailComTokenNoCorpo(user.getEmail(), user.getIdUsuario());
                 emailService.enviaEmailComToken(email1);
+                log.info("Token expirado enviado novamente");
             } else if (emailToken.getCodigoConfirmacao().equals(condigoConfirmacao)) {
                 user.setIdStatus(new Status(2L));
                 emailService.enviarEmailComAgradecimento(user.getEmail());

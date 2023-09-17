@@ -78,7 +78,7 @@ public class EmailService {
 
         String msg = "\nSeja bem-vindo(a)" +
                      "\nConfirme sua conta com esse codigo: " + token +
-                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/confirmacao-email/" + email + "/" + token;
+                     "\n Link confirmação: http://localhost:8080/ms-agendamento-tarefa/" + email + "/" + token;
         return new UsuarioToken(email, token, msg, id);
     }
 
